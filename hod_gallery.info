@@ -1,0 +1,6 @@
+; $Id: $
+
+name = HOD Gallery
+description = HOD Gallery Display
+core = "7.x"
+package = Straight North

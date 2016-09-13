@@ -1,0 +1,49 @@
+<?php
+/**
+ *  @file
+ *  HOD Product Display
+ *
+ */
+
+/**
+ *
+ *  CTOOLS Panel
+ */
+function hod_gallery_ctools_plugin_directory($owner, $plugin_type) {
+  if ($owner == 'ctools' && $plugin_type == 'content_types') {
+    return 'plugins/' . $plugin_type;
+  }
+}
+
+/**
+ *
+ *  hook_menu()
+ */
+function hod_gallery_menu() {
+  $items = array();
+  $items['product_gallery_loader'] = array(
+              'title' => 'Product Gallery',
+              'page callback' => 'product_gallery_loader_render',
+              'access arguments' => array('access hod_loader content'),
+              'description' => 'HoD Loader Control',
+              'access callback' => TRUE,
+              'type' => MENU_NORMAL_ITEM,
+          );
+     return $items;
+  }
+
+
+  function product_gallery_loader_render($node) {
+    // BUILD IMAGE ARRAY
+      $images = array();
+    // GET COVER IMAGE
+    $images[] = $node->field_product_cover_image['und'][0]['fid'];
+    // GET IMAGES
+    foreach ($node->field_product_image['und'] as $key => $value) {
+      $images[] = $value['fid'];
+  }
+
+    $return = json_encode($images);
+    return $return;
+
+  }
